@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjeta de Presentación Digital - Iglesia Nuevos Comienzos</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carga de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Carga de Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #f0f4f8;
+        }
+        /* Contenedor principal de la tarjeta */
+        .card-container {
+            width: 100%;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Media Query para pantallas más grandes */
+        @media (min-width: 450px) {
+            .card-container {
+                max-width: 420px;
+                margin: 2rem auto;
+                min-height: calc(100vh - 4rem);
+                border-radius: 24px;
+                overflow: hidden;
+            }
+        }
+
+        /* Imagen de fondo principal (Portada Actualizada) */
+        .main-bg {
+            background-image: url('https://i.postimg.cc/XY0xRB7h/Gemini-Generated-Image-1jdasd1jdasd1jda-(1).png');
+            background-size: cover;
+            background-position: center;
+            height: 220px;
+            background-color: white;
+        }
+        /* Sección de contenido principal */
+        .content-section {
+            background: linear-gradient(180deg, #005f73 0%, #0a9396 100%);
+            margin-top: -60px;
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+            position: relative;
+            padding-bottom: 2rem;
+            flex-grow: 1;
+        }
+        /* Contenedor para la foto de perfil */
+        .profile-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin-top: -105px;
+        }
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            border: 5px solid #0a9396;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            background-color: white;
+        }
+        .verification-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #3b82f6;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+        /* Botones de acción */
+        .action-btn {
+            background-color: #006da0;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 600;
+            border-radius: 9999px;
+            height: 56px;
+        }
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 109, 160, 0.4);
+        }
+        /* Botones sociales */
+        .social-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .social-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        /* Footer con color de combinación profunda */
+        .footer-banner {
+            background-color: #00252e;
+            color: #ffffff;
+        }
+
+        /* Modales */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 37, 46, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: #ffffff;
+            border-radius: 24px;
+            max-width: 90%;
+            width: 400px;
+            transform: scale(0.95) translateY(20px);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border: 4px solid #006da0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+        .modal-header {
+            padding: 1.5rem;
+            background-color: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        .modal-header-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #005f73;
+        }
+        .modal-close-btn {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: #64748b;
+        }
+        .modal-body {
+            padding: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card-container">
+        <!-- SECCIÓN DE PORTADA -->
+        <div class="main-bg"></div>
+        
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="content-section">
+            <div class="flex flex-col items-center px-6 text-center">
+                <!-- Perfil -->
+                <div class="profile-container">
+                    <img src="https://i.postimg.cc/6q6b2KwZ/2.png" alt="Nuevos Comienzos" class="profile-pic object-cover rounded-full">
+                    <div class="verification-badge">
+                        <i class="fas fa-check text-sm"></i>
+                    </div>
+                </div>
+                
+                <!-- Título: Iglesia Nuevos Comienzos -->
+                <h1 class="text-2xl font-bold text-white mt-4 tracking-tight">Iglesia Nuevos Comienzos</h1>
+                <p class="text-sm text-white opacity-80 mt-1">Conectar, crecer y servir</p>
+                
+                <!-- Invitación -->
+                <p class="text-white opacity-90 mt-6 mb-2 max-w-sm italic text-sm">¿Necesitas un nuevo comienzo en tu vida? Visítanos</p>
+                
+                <!-- Botones Principales -->
+                <div class="grid grid-cols-2 gap-3 w-full max-w-sm mx-auto mt-2">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Marginal+San+Vicente+de+Paul+%2323,+Alma+Rosa+II.+S.D.+Este.,+Santo+Domingo,+Dominican+Republic,+11506" target="_blank" class="action-btn text-lg">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Visítanos</span>
+                    </a>
+                    <button id="horario-btn-top" class="action-btn text-lg">
+                        <i class="fas fa-clock"></i>
+                        <span>Horario</span>
+                    </button>
+                </div>
+                
+                <!-- Texto Redes Sociales -->
+                <p class="text-white opacity-80 mt-8 text-center font-medium">Síguenos en nuestras redes sociales</p>
+
+                <!-- Cuadrícula de Iconos -->
+                <div class="grid grid-cols-3 gap-3 w-full max-w-sm mx-auto mt-4">
+                    <a href="https://www.youtube.com/@NuevosComienzosRD" target="_blank" class="social-btn flex flex-col justify-center items-center py-4 rounded-2xl">
+                        <i class="fab fa-youtube text-2xl"></i>
+                        <span class="text-[10px] mt-2 font-medium">YouTube</span>
+                    </a>
+                    <a href="https://open.spotify.com/show/0tdBMIWYtsA8h6Gp9nKQic?si=JxMWIuJqQhaLP9hKOlvJvQ" target="_blank" class="social-btn flex flex-col justify-center items-center py-4 rounded-2xl">
+                        <i class="fab fa-spotify text-2xl"></i>
+                        <span class="text-[10px] mt-2 font-medium">Spotify</span>
+                    </a>
+                    <a href="https://www.instagram.com/nuevoscomienzosrd?igsh=MWNoOHZlbWdyZ3lzNQ==" target="_blank" class="social-btn flex flex-col justify-center items-center py-4 rounded-2xl">
+                        <i class="fab fa-instagram text-2xl"></i>
+                        <span class="text-[10px] mt-2 font-medium">Instagram</span>
+                    </a>
+                    <a href="https://www.facebook.com/share/18YrxDsaCz/" target="_blank" class="social-btn flex flex-col justify-center items-center py-4 rounded-2xl">
+                        <i class="fab fa-facebook-f text-2xl"></i>
+                        <span class="text-[10px] mt-2 font-medium">Facebook</span>
+                    </a>
+                    <a href="https://wa.me/18298253841" target="_blank" class="social-btn flex flex-col justify-center items-center py-4 rounded-2xl">
+                        <i class="fab fa-whatsapp text-2xl"></i>
+                        <span class="text-[10px] mt-2 font-medium">WhatsApp</span>
+                    </a>
+                    <!-- Botón: Lista de difusión con Mailchimp -->
+                    <a href="https://mailchi.mp/58490e2f913f/registro-aliados" target="_blank" class="social-btn flex flex-col justify-center items-center py-4 rounded-2xl">
+                        <i class="fas fa-envelope-open-text text-2xl"></i>
+                        <span class="text-[10px] mt-2 font-medium">Lista de Difusión</span>
+                    </a>
+                </div>
+
+                <!-- Botón de Instalación -->
+                <div id="install-btn" class="text-white opacity-70 mt-8 text-center cursor-pointer hover:opacity-100 transition underline text-xs">
+                    ¿Cómo instalar en mi dispositivo?
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pie de página con Texto Institucional -->
+        <div class="footer-banner text-center py-5 px-6">
+            <p class="font-bold text-sm mb-1 uppercase tracking-wide">Iglesia Nuevos Comienzos</p>
+            <p class="text-[11px] font-medium leading-tight opacity-75 mb-2">
+                Marginal San Vicente de Paul #23, Alma Rosa II, S.D. Este, Santo Domingo, Rep. Dom.
+            </p>
+            <a href="mailto:nuevoscomienzosrd@gmail.com" class="inline-block text-xs text-[#0a9396] hover:text-white hover:underline font-medium transition">nuevoscomienzosrd@gmail.com</a>
+        </div>
+    </div>
+
+    <!-- MODAL DE HORARIO -->
+    <div id="horario-modal" class="modal-overlay">
+        <div class="modal-content">
+             <div class="modal-header">
+                <h2 class="modal-header-title">Horarios de Servicio</h2>
+                <button class="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-calendar-day text-[#005f73]"></i>
+                            <span class="font-bold text-gray-700">Sábados</span>
+                        </div>
+                        <span class="bg-[#006da0] text-white text-xs font-bold px-3 py-1 rounded-full italic">7:00 PM</span>
+                    </div>
+                    <div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-sun text-[#005f73]"></i>
+                            <span class="font-bold text-gray-700">Domingos</span>
+                        </div>
+                        <span class="bg-[#006da0] text-white text-xs font-bold px-3 py-1 rounded-full italic">9:30 AM</span>
+                    </div>
+                    <div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-church text-[#005f73]"></i>
+                            <span class="font-bold text-gray-700">Domingos</span>
+                        </div>
+                        <span class="bg-[#006da0] text-white text-xs font-bold px-3 py-1 rounded-full italic">11:30 AM</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE INSTALACIÓN -->
+    <div id="install-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-header-title">Instalar en Pantalla</h2>
+                <button class="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-body text-sm text-gray-600 space-y-4">
+                <div class="p-4 bg-blue-50 rounded-xl">
+                    <p class="font-bold text-[#005f73] mb-1">En iPhone / iOS:</p>
+                    <p>Pulsa el icono Compartir <i class="fas fa-arrow-up-from-bracket mx-1"></i> y selecciona <span class="font-bold">"Agregar a inicio"</span>.</p>
+                </div>
+                <div class="p-4 bg-green-50 rounded-xl">
+                    <p class="font-bold text-[#005f73] mb-1">En Android / Chrome:</p>
+                    <p>Toca los tres puntos <i class="fas fa-ellipsis-v mx-1"></i> y selecciona <span class="font-bold">"Instalar"</span> o <span class="font-bold">"Agregar a pantalla principal"</span>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lógica de Modales
+        function initModal(btnId, modalId) {
+            const btn = document.getElementById(btnId);
+            const modal = document.getElementById(modalId);
+            if (!btn || !modal) return;
+            const closeBtn = modal.querySelector('.modal-close-btn');
+            
+            btn.addEventListener('click', () => modal.classList.add('active'));
+            closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+            modal.addEventListener('click', (e) => { if(e.target === modal) modal.classList.remove('active'); });
+        }
+
+        initModal('horario-btn-top', 'horario-modal');
+        initModal('install-btn', 'install-modal');
+    </script>
+</body>
+</html>
